@@ -4,4 +4,4 @@ python-multipart
 PyMuPDF
 requests
 python-dotenv
-anthropic
+google-generativeai

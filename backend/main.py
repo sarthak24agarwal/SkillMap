@@ -115,16 +115,16 @@ async def analyze_skills(file: UploadFile = File(...)):
                        "Please make sure it's a text-based (digital) PDF, not a scanned image."
             )
             
-        # Step 3: Use Claude to extract skills from the resume
+        # Step 3: Use Gemini to extract skills from the resume
         user_skills = extract_skills_from_resume(resume_text)
-        print(f"Step 3: Extracted {len(user_skills)} skills using Claude API: {user_skills}")
+        print(f"Step 3: Extracted {len(user_skills)} skills using Gemini API: {user_skills}")
         
         if not user_skills:
-            print("Step 3 Warning: Claude did not extract any skills.")
+            print("Step 3 Warning: Gemini did not extract any skills.")
             raise HTTPException(
                 status_code=500,
                 detail="Friendly Error: We couldn't extract any skills from your resume. "
-                       "Make sure your Claude API Key is configured in the .env file."
+                       "Make sure your Gemini API Key is configured in the Environment Variables on Render."
             )
 
         # Step 4: Fetch matching job data from JSearch API
