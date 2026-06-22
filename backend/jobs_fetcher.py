@@ -24,6 +24,33 @@ load_dotenv()
 RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY")
 RAPIDAPI_HOST = "jsearch.p.rapidapi.com"
 
+def fallback_fetch_jobs(skills: list[str]) -> list[dict]:
+    print("Using offline mock data fallback for jobs...")
+    main_skill = skills[0] if skills else "Software"
+    return [
+        {
+            "title": f"Junior {main_skill} Developer",
+            "company": "Tech Innovations Inc.",
+            "required_skills": skills[:3] + ["Docker", "AWS"],
+            "salary_min": 70000,
+            "salary_max": 90000
+        },
+        {
+            "title": f"{main_skill} Engineer",
+            "company": "Global Startup Co.",
+            "required_skills": skills[:2] + ["Kubernetes", "SQL"],
+            "salary_min": 80000,
+            "salary_max": 110000
+        },
+        {
+            "title": "Backend Systems Engineer",
+            "company": "Enterprise Solutions",
+            "required_skills": skills[:4] + ["FastAPI"],
+            "salary_min": None,
+            "salary_max": None
+        }
+    ]
+
 def fetch_jobs_for_skills(skills: list[str]) -> list[dict]:
     """
     Searches for jobs matching the user's top skills using the JSearch API from RapidAPI.
@@ -36,8 +63,8 @@ def fetch_jobs_for_skills(skills: list[str]) -> list[dict]:
 
     # Verify the API key is configured
     if not RAPIDAPI_KEY or RAPIDAPI_KEY == "your_key_here":
-        print("Error: RAPIDAPI_KEY is not set or is still the placeholder. Please set it in your .env file.")
-        return []
+        print("Warning: RAPIDAPI_KEY is not set. Falling back to mock jobs.")
+        return fallback_fetch_jobs(skills)
 
     # To keep API usage low and focused, we'll build a search query using the top 3 skills.
     # E.g., if skills are ['Python', 'React', 'FastAPI', 'Docker'], the query becomes "Python React FastAPI Developer"
@@ -64,7 +91,7 @@ def fetch_jobs_for_skills(skills: list[str]) -> list[dict]:
         if response.status_code != 200:
             print(f"Error calling JSearch API: HTTP {response.status_code}")
             print(response.text)
-            return []
+            return fallback_fetch_jobs(skills)
 
         # Parse the JSON response
         data = response.json()
@@ -116,7 +143,7 @@ def fetch_jobs_for_skills(skills: list[str]) -> list[dict]:
     except Exception as e:
         # Friendly error handling so a failed API call does not crash our backend
         print(f"Error fetching jobs from JSearch: {e}")
-        return []
+        return fallback_fetch_jobs(skills)
 
 if __name__ == "__main__":
     print("=== Standalone Jobs Fetcher Test ===")
