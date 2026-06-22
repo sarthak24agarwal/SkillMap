@@ -38,6 +38,17 @@ app.add_middleware(
     allow_headers=["*"],              # Allows all request headers
 )
 
+@app.get("/")
+def root():
+    """
+    Friendly welcome message when someone visits the API in their browser.
+    """
+    return {
+        "message": "Welcome to the SkillMap API!", 
+        "status": "Online",
+        "tip": "The frontend React app talks to the /analyze endpoint here."
+    }
+
 @app.get("/health")
 def health_check():
     """
