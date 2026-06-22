@@ -33,7 +33,7 @@ export async function analyzeResume(file) {
 
   try {
     // 3. Perform the POST request to the backend server
-    const response = await fetch('http://localhost:8000/analyze', {
+    const response = await fetch('https://skillmap-backend-gmvh.onrender.com/analyze', {
       method: 'POST',
       body: formData, // Passing the FormData object directly in the body
     });
@@ -64,7 +64,7 @@ export async function analyzeResume(file) {
       console.error('Connection error:', error);
       throw new Error(
         'Friendly Error: Could not connect to the SkillMap backend server. ' +
-        'Please make sure your FastAPI server is running on http://localhost:8000!'
+        'Please make sure your FastAPI server is running on https://skillmap-backend-gmvh.onrender.com!'
       );
     }
     
