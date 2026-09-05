@@ -3,9 +3,6 @@
 ## What does this do?
 It takes your resume and shows exactly which skills you're missing for the jobs you want.
 
-## Live Demo
-[Link to deployed project] | [Link to demo video — Loom, 2 minutes]
-
 ## Why I built this
 As a CSE student applying for software engineering roles, I was tired of blindly guessing what skills I needed to stand out in today's competitive market. I realized most job descriptions ask for the same core technologies, but it takes hours to manually cross-reference them with your own resume. I built SkillMap to automate this process and give students a clear, data-driven learning roadmap.
 
